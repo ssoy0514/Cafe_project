@@ -6,7 +6,10 @@ router = routers.DefaultRouter()
 router.register(r"menu", views.MenuViewSet)
 router.register(r"event", views.EventViewSet)
 router.register(r"category", views.CategoryViewSet)
-
+router.register(r"category", views.HomeViewSet)
+router.register(r"category", views.CouponViewSet)
+router.register(r"category", views.CaroselViewSet)
+router.register(r"category", views.OrderViewSet)
 
 
 

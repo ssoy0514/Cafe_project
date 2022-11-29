@@ -12,13 +12,29 @@ Class-based views
 Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+# """
+# from django.contrib import admin
+# from django.urls import path, include
+# from ..backend import views
+# from rest_framework import urls
+# # from knox import views as knox_views
+
+# urlpatterns = [
+#     path('admin/', admin.site.urls),
+#     # path('consumsers/', include('consumers.urls')),
+#     # path('store/',include('store.urls')),
+#     # path('main/', include('main.urls')),
+#     # path("profile_all/", include("profile_all.urls")),
+#     # path("profile_all/auth/", include("knox.urls")),
+#     # path('profile_all/auth/logout',knox_views.LogoutView.as_view(), name="knox-logout"),
+#     path('signup/', views.UserCreate.as_view()),
+#     path('api-auth/', include('rest_framework.urls'))
+# ]
+
 from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('consumsers/', include('consumers.urls')),
-    # path('store/',include('store.urls')),
-    path('main/', include('main.urls'))
-]
+    path('user/', include('account.urls')),
+    ]
