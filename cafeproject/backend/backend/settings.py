@@ -57,7 +57,13 @@ INSTALLED_APPS = [
 ]
 
 ACCOUNT_EMAIL_REQUIRED = False
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'soymelody0321@gmail.com'
+EMAIL_HOST_PASSWORD = 'dtwlfoivbkqwhxsb'
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # REST_FRAMEWORK = {
 #     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
