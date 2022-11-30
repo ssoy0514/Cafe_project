@@ -27,8 +27,11 @@ from . import views
 from rest_framework import urls
 
 urlpatterns =[
-    path('signup/', views.UserCreate.as_view()),
-    path('signup/consumer', views.ConsumerCreate.as_view()),
-    path('signup/store', views.StoreCreate.as_view()),
-    path('api-auth/', include('rest_framework.urls')),
+    path('profile/', views.ProfileCreate.as_view()),
+    path('profile/consumer', views.ConsumerCreate.as_view()),
+    path('profile/store', views.StoreCreate.as_view()),
+    # path('api-auth/', include('rest_framework.urls')),
+    # 일반 회원 회원가입/로그인
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls'))
     ]

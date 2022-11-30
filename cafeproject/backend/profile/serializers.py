@@ -1,9 +1,9 @@
-from .models import User, Consumer, Store
+from .models import Profile, Consumer, Store
 from rest_framework import serializers
 from django.http import JsonResponse
-class UserSerializer(serializers.ModelSerializer):
+class ProfileSerializer(serializers.ModelSerializer):
         def create(self, validated_data):
-                user = User.objects.create_user(
+                user = Profile.objects.create_user(
                 email = validated_data['email'],
                 username = validated_data['name'],
                 password = validated_data['password'],
@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
                 )
                 return user
         class Meta:
-                model = User
+                model = Profile
                 fields = "__all__"
         
 class ConsumerSerializer(serializers.ModelSerializer):

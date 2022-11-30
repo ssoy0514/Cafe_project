@@ -12,18 +12,24 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os, environ
+env = environ.Env(
+    DEBUG=(bool, False)
+)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(
+    env_file = os.path.join(BASE_DIR, '.env')
+)
 
+SECRET_KEY = env('SECRET_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-fv4peaxoy3et_2ly8u-9o8m5fb20plq^rf0dkt#g6d#dyg!6m4'
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
@@ -38,16 +44,46 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
-    'account',
+    'profile',
     'rest_framework',
+    'django_extensions',
+    'rest_framework_simplejwt',
+    'dj_rest_auth',
+    'rest_framework.authtoken',
+    'allauth',
+    'allauth.account',
+    'dj_rest_auth.registration',
     # 'knox',
-    
 ]
+
+ACCOUNT_EMAIL_REQUIRED = False
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # REST_FRAMEWORK = {
 #     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
 # }
 
+# user 앱에서 내가 설정한 User를 사용하겠다고 설정
+AUTH_USER_MODEL = 'auth.User'
+
+# jwt 토큰은 simplejwt의 JWTAuthentication으로 인증한다.
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         # 'rest_framework.permissions.IsAuthenticated', # 인증된 사용자만 접근
+#         # 'rest_framework.permissions.IsAdminUser', # 관리자만 접근
+#         'rest_framework.permissions.AllowAny', # 누구나 접근
+#     ),
+
+# }
+# DEFAULT_PERMISSION_CLASSES는 API에 접근할 때 헤더에 access_token을 포함한, 
+# 유효한 유저만이 접근할 수 있도록 default로 설정해주는 부분이다. 
+# 여기서 설정을 하면 API에 일일이 접근권한을 설정하지 않아도 된다.
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -85,8 +121,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Cafeproject',
+        'USER' : 'admin',
+        'PASSWORD' : 'monstax0528',
+        'HOST' : 'awsdj.cztqzkduwfdf.ap-northeast-2.rds.amazonaws.com',
+        'PORT' : 3306,
     }
 }
 
@@ -131,6 +171,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# AUTO_USER_MODEL = 'authentication.User'
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
