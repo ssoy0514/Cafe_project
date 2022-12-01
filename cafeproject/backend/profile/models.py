@@ -72,7 +72,7 @@ class Consumer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     type = models.ForeignKey(Profile, related_name="user_consumer", on_delete=models.SET_NULL, null=True)
     customerId = models.TextField()
-    point = models.IntegerField()
+    point = models.IntegerField() # 매장별
     created_at = models.DateTimeField(default=timezone.now)
     gender = models.CharField(max_length=5)
     
